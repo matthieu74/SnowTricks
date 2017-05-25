@@ -1,0 +1,30 @@
+{% extends "STFigureBundle::layout.html.twig" %}
+
+{% block figures %}
+<section id="myFigure">
+        <div class="container">
+			<h2 class="text-center">Edit a figure</h2>
+			<hr>
+            <div class="row">
+				<div class="col-lg-10 col-lg-offset-1">
+				{% autoescape %}
+					{{ form_start(form) }}
+					{{ form_rest(form) }}
+					<div class="row">
+						<div class="text-right">
+							<ul class="pager">
+								<li class="next">
+									<a href="{{ asset('index.php/blogs') }}">Cancel</a>
+									<button type="submit" class="btnsave btn btn-default">Save</button>
+								</li>
+							</ul>
+                        </div>
+					</div>
+					{{ form_end(form) }}
+					{% endautoescape %}
+				</div>
+			</div>
+	</div>
+</section>
+					
+{% endblock %}

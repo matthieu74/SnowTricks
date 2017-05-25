@@ -1,0 +1,39 @@
+{% extends "STFigureBundle::layout.html.twig" %}
+
+{% block figures %}
+<section id="myFigure">
+        <div class="container">
+			<div class="col-lg-7 col-lg-offset-1">
+				<div class="row">
+					{% for figure in figures %}
+
+						<h2><a href="{{ path('st_figure_view', {'id': figure.id}) }}">{{ figure.name }}</a></h2>
+						<p>Posted by <i>{{ figure.username }}</i> on {{ figure.updateDate|date("d/m/y") }}</p>
+						{% if is_granted("ROLE_USER") %}
+							<a href="{{ path('st_figure_edit', {'id': figure.id}) }}" class="glyphicon glyphicon-pencil">edit</a>
+							<a href="{{ path('st_figure_delete', {'id': figure.id}) }}" class="glyphicon glyphicon-trash">delete</a>
+						{% endif %}
+						<hr class="star-primary">
+					{% endfor %}
+				</div>
+				<div class="row">
+					<div>
+						<ul class="pager">
+							
+							<li class="next">
+								<a href="{{ path('st_figure_Par5', {'offset': newestOffset}) }}" class="{{ newestDisable }}">newest</a>
+								
+								<a href="{{ path('st_figure_Par5', {'offset': oldestOffset}) }}" class="{{ oldestDisable }}">oldest</a>
+							
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+			</div>			
+        </div>
+  </section>
+  
+
+{% endblock %}

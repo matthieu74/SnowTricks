@@ -1,0 +1,37 @@
+st_home:
+    path: /
+    defaults: { _controller: STFigureBundle:Figure:index }
+
+st_figures:
+    path:     /figures
+    defaults: { _controller: STFigureBundle:Figure:index }
+
+st_figure_add:
+    path:     /figure/add
+    defaults: { _controller: STFigureBundle:Figure:addFigure }
+
+st_figure_edit:
+    path:     /figure/edit/{id}
+    defaults: { _controller: STFigureBundle:Figure:editFigure }
+
+st_figure_view_by_10:
+    path:     /figure/view/{id}/{offset}
+    defaults: { _controller: STFigureBundle:Figure:viewFigureBy10 }
+
+st_figure_view:
+    path:     /figure/view/{id}
+    defaults: { _controller: STFigureBundle:Figure:viewFigure }
+
+st_figure_delete:
+    path:     /figure/delete/{id}
+    defaults: { _controller: STFigureBundle:Figure:deleteFigure }
+
+st_figure_Par5:
+    path:     /figures/{offset}
+    defaults: { _controller: STFigureBundle:Figure:showFigure }
+
+st_pageNotFound:
+    path:  /{req}
+    defaults: { _controller: STFigureBundle:Figure:show404 }
+    requirements:
+      req: ".+"

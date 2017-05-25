@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}OC Plateforme{% endblock %}</title>
+
+    {% block stylesheets %}
+      {# On charge le CSS de bootstrap depuis le site directement #}
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link href="{{ asset('css/snow_tricks.css') }}" rel="stylesheet">
+	   <!-- Custom Fonts -->
+		<link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+		<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    {% endblock %}
+  </head>
+
+  <body>
+	  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+  			<div class="container-fluid">
+				<div class="navbar-header page-scroll">
+					<a class="navbar-brand" href="{{ path('st_home') }}">Home</a>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+					{% if is_granted("ROLE_USER") %}
+						<li><a href="{{ path('st_figure_add') }}"><span class="glyphicon glyphicon-plus"></span>Add a figure</a> </li>
+						<li><a href="#"><span class="glyphicon glyphicon-user"></span>{{ app.user.username }}</a> </li>
+						<li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+					{% else %}
+						<li><a data-toggle="modal" href="{{ path('fos_user_registration_register') }}"  data-target="#myRegister"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+						<li><a data-toggle="modal" href="{{ path('fos_user_security_login') }}" data-target="#myLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					{% endif %}
+					
+					
+				</ul>
+  			</div>
+		</nav>
+	  <header class="intro-header" style="background-image: url({{ asset('img/2.jpg') }}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Snow Tricks</h1>
+                        <hr class="small">
+                        <span class="subheading">A Clean Blog Theme by Start Bootstrap</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+	<div class="modal fade" id="myLogin" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="myRegister" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+				</div>
+			</div>
+		</div>
+	</div>
+	{% block figures %}{% endblock %}
+	 <hr>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+  {% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+	
+    <!-- Theme JavaScript -->
+    <script src="{{ asset('js/clean-blog.min.js') }}"></script>
+  {% endblock %}
+
+  </body>
+</html>
