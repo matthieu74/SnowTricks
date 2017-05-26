@@ -16,5 +16,6 @@ then create the table :
     php bin/console doctrine:schema:update --dump-sql
     php bin/console doctrine:schema:update --force
 
-fill the data base with the SQL scrpt
+fill the data base with the SQL script
 
+    symfony.sql
