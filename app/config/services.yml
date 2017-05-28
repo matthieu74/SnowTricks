@@ -7,6 +7,8 @@ services:
     figure_service:
         class: ST\FigureBundle\Models\Service\FigureService
         arguments: [ "@doctrine.orm.entity_manager" , "@service_container" ]
+    layout_service:
+        class: ST\FigureBundle\Models\Service\LayoutService
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

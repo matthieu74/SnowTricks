@@ -22,26 +22,11 @@ class FigureController extends Controller
     {
 		$results = $this->get('figure_service')->getFigures($offset);
 
-		$oldestDisable = '';
-        $newestDisable = '';
-        if ($offset == 0)
-        {
-            $newestDisable = 'not-active';   
-        }
-        
-        if (count($results) < 5) 
-        {
-            $oldestDisable = 'not-active';
-        }
-        $oldestOffset = $offset + 1;
-        $newestOffset = $offset - 1;
+		$paging = $this->get('layout_service')->getPaging($results,5, $offset);
 		$array = array(
 						'title' => 'snow tricks',
 						'figures' => $results,
-                        'oldestOffset' => $oldestOffset,
-                        'newestOffset' => $newestOffset,
-                        'oldestDisable' => $oldestDisable,
-                        'newestDisable' => $newestDisable
+                        'paging' => $paging
 						);
 		return $this->render('STFigureBundle:Core:index.html.twig', $array);
     }
@@ -57,9 +42,7 @@ class FigureController extends Controller
     public function addFigureAction(Request $request)
 	{
 		$figure = new Figure();
-		$typeF = new TypeFigure();
-		$typeF->setName('tit');
-		$figure->getTypeFigure()->add($typeF);
+		
 		$form = $this->get('form.factory')->create(FigureType::class, $figure);
 		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
@@ -97,12 +80,13 @@ class FigureController extends Controller
 	public function viewFigureBy10Action($id, $offset, Request $request)
 	{
     	$figure = $this->get('figure_service')->getFigure($id);
-		
 		if (null === $figure) {
 		  	throw new NotFoundHttpException("La figure d'id ".$id." n'existe pas.");
 		}
-
+		
 		$listComment = $this->get('figure_service')->getComments($figure, $offset);
+		
+		$listTypeFigure = $this->get('figure_service')->getTypesFigures($figure);
 			
 		$comment = new Comment();
 		$form = $this->get('form.factory')->create(CommentType::class, $comment);
@@ -116,29 +100,19 @@ class FigureController extends Controller
 														'offset' => $offset));
 		}
 		
-		$oldestDisable = '';
-        $newestDisable = '';
-        if ($offset == 0)
-        {
-            $newestDisable = 'not-active';   
-        }
-        
-        if (count($listComment) < 10) 
-        {
-            $oldestDisable = 'not-active';
-        }
-        $oldestOffset = $offset + 1;
-        $newestOffset = $offset - 1;
+		
+		
+		$paging = $this->get('layout_service')->getPaging($listComment,10, $offset);
     	$array = array(
 						'title' => 'snow tricks',
 						'figure' => $figure,
 						'comments' => $listComment,
+						'types_figure' => $listTypeFigure,
 						'form' => $form->createView(),
-						'oldestOffset' => $oldestOffset,
-                        'newestOffset' => $newestOffset,
-                        'oldestDisable' => $oldestDisable,
-                        'newestDisable' => $newestDisable
+						'paging' => $paging
 						);
+		
+		//return var_dump($listTypeFigure);
 		return $this->render('STFigureBundle:Core:detail.html.twig', $array);
 	}
 	

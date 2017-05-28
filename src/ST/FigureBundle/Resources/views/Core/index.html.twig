@@ -21,9 +21,9 @@
 						<ul class="pager">
 							
 							<li class="next">
-								<a href="{{ path('st_figure_Par5', {'offset': newestOffset}) }}" class="{{ newestDisable }}">newest</a>
+								<a href="{{ path('st_figure_Par5', {'offset': paging.newestOffset}) }}" class="{{ paging.newestDisable }}">newest</a>
 								
-								<a href="{{ path('st_figure_Par5', {'offset': oldestOffset}) }}" class="{{ oldestDisable }}">oldest</a>
+								<a href="{{ path('st_figure_Par5', {'offset': paging.oldestOffset}) }}" class="{{ paging.oldestDisable }}">oldest</a>
 							
 							</li>
 						</ul>

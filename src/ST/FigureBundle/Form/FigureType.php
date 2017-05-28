@@ -19,9 +19,10 @@ class FigureType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')
-					->add('description', CKEditorType::class)
+        $builder->add('name',TextType::class, array('label' => 'Nom'))
+					->add('description', CKEditorType::class, array('label' => 'Description'))
 					->add('typeFigure', CollectionType::class, array(
+							'label' => 'Groupes',
 							'entry_type' => TypeFigureType::class,
 							'allow_add' => true,
 							'allow_delete' => true,

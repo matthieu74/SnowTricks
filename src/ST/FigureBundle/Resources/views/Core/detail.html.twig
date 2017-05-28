@@ -8,7 +8,10 @@
 					<h2>{{ figure.name }}</h2>
 					Posted by <i>{{ figure.user.username }}</i> on {{ figure.updateDate|date("d/m/y") }}
 					<p> {{ figure.description|raw }}</p>
-					
+					{% for typeFigure in types_figure %}
+						<span class = "glyphicon glyphicon-bookmark">{{ typeFigure.name }}</span>
+					{% endfor %}
+					<br>
 					{% if is_granted("ROLE_USER") %}
 						<a href="{{ path('st_figure_edit', {'id': figure.id}) }}" class="glyphicon glyphicon-pencil">edit</a>
 						<a href="{{ path('st_figure_delete', {'id': figure.id}) }}" class="glyphicon glyphicon-trash">delete</a>
@@ -26,8 +29,8 @@
 				<div class="row">
 					<ul class="pager">
 							<li class="next">
-								<a href="{{ path('st_figure_view_by_10', {'id':figure.id, 'offset': newestOffset}) }}" class="{{ newestDisable }}">newest</a>
-								<a href="{{ path('st_figure_view_by_10', {'id':figure.id,'offset': oldestOffset}) }}" class="{{ oldestDisable }}">oldest</a>
+								<a href="{{ path('st_figure_view_by_10', {'id':figure.id, 'offset': paging.newestOffset}) }}" class="{{ paging.newestDisable }}">newest</a>
+								<a href="{{ path('st_figure_view_by_10', {'id':figure.id,'offset': paging.oldestOffset}) }}" class="{{ paging.oldestDisable }}">oldest</a>
 						</li>
 					</ul>
 				</div>

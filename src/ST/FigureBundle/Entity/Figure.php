@@ -61,17 +61,17 @@ class Figure
 	
 	 public function addTypeFigure(TypeFigure $typeFigure)
     {
-        if (!is_null($typeFigure) && !in_array($typeFigure, $this->typeFigure)) {
-            $this->typeFigure[] = $typeFigure;
+        if ($this->typeFigure->contains($typeFigure)) {
+            return;
         }
-        return $this;
+        $this->typeFigure->add($typeFigure);
     }
-    public function removeTask(TypeFigure $typeFigure)
+    public function removeTypeFigure(TypeFigure $typeFigure)
     {
-        if (!is_null($typeFigure)) {
-            $this->typeFigure = array_diff($this->typeFigure, array($typeFigure));
+       if (!$this->typeFigure->contains($typeFigure)) {
+            return;
         }
-        return $this;
+        $this->typeFigure->removeElement($typeFigure);
     }
 	public function getTypeFigure()
 	{
@@ -80,7 +80,7 @@ class Figure
 	
 	public function setTypeFigure($typeFigure)
 	{
-		$this->$typeFigure;
+		$this->$typeFigure = $typeFigure;
 	}
     /**
      * Get id
