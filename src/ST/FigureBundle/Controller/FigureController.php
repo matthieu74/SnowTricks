@@ -48,7 +48,21 @@ class FigureController extends Controller
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
 			$results = $this->get('figure_service')->addFigure($this->container->get('security.token_storage')->getToken()->getUser(),
-									  $figure);			
+									  $figure, $_POST['figure']['typeFigure']);
+			if (!is_null($results))
+			{
+				$this->get('session')->getFlashBag()->add(
+						'error',
+						$results
+				);
+				return $this->render('STFigureBundle:Core:edit.html.twig', array(
+									'form' => $form->createView(),
+								));
+			}
+			$this->get('session')->getFlashBag()->add(
+						'notice',
+						'Votre figure a bien été ajouté'
+			);
 			return $this->redirectToRoute('st_home');
 		}
 		
@@ -67,7 +81,11 @@ class FigureController extends Controller
 		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
-			$this->get('figure_service')->saveFigure($figure);
+			$this->get('figure_service')->saveFigure($figure, $_POST['figure']['typeFigure']);
+			$this->get('session')->getFlashBag()->add(
+						'notice',
+						'Votre figure a bien été modifié'
+			);
 			return $this->redirectToRoute('st_home');
 		}
 		
@@ -77,9 +95,9 @@ class FigureController extends Controller
 	}
 	
 	
-	public function viewFigureBy10Action($id, $offset, Request $request)
+	public function viewFigureBy10Action($name, $offset, Request $request)
 	{
-    	$figure = $this->get('figure_service')->getFigure($id);
+    	$figure = $this->get('figure_service')->getFigure($name);
 		if (null === $figure) {
 		  	throw new NotFoundHttpException("La figure d'id ".$id." n'existe pas.");
 		}
@@ -117,9 +135,9 @@ class FigureController extends Controller
 	}
 	
 	
-	public function viewFigureAction($id, Request $request)
+	public function viewFigureAction($name, Request $request)
 	{
-		return $this->viewFigureBy10Action($id,0, $request);
+		return $this->viewFigureBy10Action($name,0, $request);
 	}	
 
 	/**

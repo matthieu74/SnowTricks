@@ -29,8 +29,8 @@
 				<div class="row">
 					<ul class="pager">
 							<li class="next">
-								<a href="{{ path('st_figure_view_by_10', {'id':figure.id, 'offset': paging.newestOffset}) }}" class="{{ paging.newestDisable }}">newest</a>
-								<a href="{{ path('st_figure_view_by_10', {'id':figure.id,'offset': paging.oldestOffset}) }}" class="{{ paging.oldestDisable }}">oldest</a>
+								<a href="{{ path('st_figure_view_by_10', {'name':figure.name, 'offset': paging.newestOffset}) }}" class="{{ paging.newestDisable }}">newest</a>
+								<a href="{{ path('st_figure_view_by_10', {'name':figure.name,'offset': paging.oldestOffset}) }}" class="{{ paging.oldestDisable }}">oldest</a>
 						</li>
 					</ul>
 				</div>

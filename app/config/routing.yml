@@ -2,7 +2,6 @@ st_admin:
     resource: "@STAdminBundle/Resources/config/routing.yml"
     prefix:   /admin
 
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -29,7 +28,6 @@ fos_user_registration_register:
 
 elfinder:
     resource: "@FMElfinderBundle/Resources/config/routing.yml"
-    
 st_figure:
     resource: "@STFigureBundle/Resources/config/routing.yml"
     prefix:   /

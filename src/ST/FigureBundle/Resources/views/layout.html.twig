@@ -44,7 +44,7 @@
                     <div class="site-heading">
                         <h1>Snow Tricks</h1>
                         <hr class="small">
-                        <span class="subheading">A Clean Blog Theme by Start Bootstrap</span>
+                        <span class="subheading">le site communautaire pour apprendre les figures de snowboard</span>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,20 @@
 			</div>
 		</div>
 	</div>
+	  {% for flashMessage in app.session.flashbag.get('notice') %}
+		<div class="flash-notice">
+			{{ flashMessage }}
+		</div>
+	{% endfor %}
+	  {% for flashMessage in app.session.flashbag.get('error') %}
+		<div class="flash-error">
+			{{ flashMessage }}
+		</div>
+	{% endfor %}
+	  
+	  
 	{% block figures %}{% endblock %}
+	
 	 <hr>
     <footer>
         <div class="container">
@@ -136,10 +149,7 @@
     }
 
     // La fonction qui ajoute un formulaire CategoryType
-    function addCategory($container) {
-      // Dans le contenu de l'attribut « data-prototype », on remplace :
-      // - le texte "__name__label__" qu'il contient par le label du champ
-      // - le texte "__name__" qu'il contient par le numéro du champ
+    function addCategory($container) {     
       var template = $container.attr('data-prototype')
         .replace(/__name__label__/g, 'Groupe n°' + (index+1))
         .replace(/__name__/g,        index)
@@ -161,7 +171,7 @@
     // La fonction qui ajoute un lien de suppression d'une catégorie
     function addDeleteLink($prototype) {
       // Création du lien
-      var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+      var $deleteLink = $('<div class="text-right"><a href="#">Supprimer</a></div>');
 
       // Ajout du lien
       $prototype.append($deleteLink);

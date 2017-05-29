@@ -22,12 +22,16 @@ class FigureType extends AbstractType
         $builder->add('name',TextType::class, array('label' => 'Nom'))
 					->add('description', CKEditorType::class, array('label' => 'Description'))
 					->add('typeFigure', CollectionType::class, array(
-							'label' => 'Groupes',
+							'label' => 'Catégorie',
 							'entry_type' => TypeFigureType::class,
 							'allow_add' => true,
 							'allow_delete' => true,
+							'prototype' => true,
+        					'by_reference' => false,
+							'entry_options' => array('label' => false)
 							)
 						 );
+		
     }
     
     /**
@@ -37,6 +41,7 @@ class FigureType extends AbstractType
     {
 		$resolver->setDefaults(array(
             'data_class' => Figure::class,
+			'cascade_validation' => true
         ));
     }
 

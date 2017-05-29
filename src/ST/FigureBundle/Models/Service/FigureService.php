@@ -2,6 +2,7 @@
 namespace ST\FigureBundle\Models\Service;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use ST\FigureBundle\Entity\TypeFigure;
 
 class FigureService
 {
@@ -26,31 +27,31 @@ class FigureService
 		return $query->getQuery()->getResult();
 	}
 	
-	public function addFigure($user, $figure)
+	public function addFigure($user, $figure, $listTypeFigure)
 	{
-		$figure->setUser($user);
-		$figure->setUpdateDate(new \DateTime());
-		$this->em ->persist($figure);
-		$this->em ->flush();
-	}
-	
-	public function getFigure($id)
-	{
-		return $this->em ->getRepository('STFigureBundle:Figure')->find($id);
-	}
-	
-	public function saveFigure($figure)
-	{
+		$figureWithSameName = $this->em->getRepository('STFigureBundle:Figure')->findBy(array('name' => $figure->getName()));
+		if (count($figureWithSameName) > 0)
+		{
+			return 'Ce nom de figure est déjà utilisé';
+		}
 		foreach($figure->getTypeFigure() as $typeF)
         {
-			$typeFigure = $this->em->getRepository('STFigureBundle:TypeFigure')->findBy(array('name' => $typeF->getName()));
-			if (is_null($typeFigure))
+			$figure->removeTypeFigure($typeF);			
+        }
+		
+		foreach($listTypeFigure as $typeF)
+        {
+			$typeFigure = $this->em->getRepository('STFigureBundle:TypeFigure')->findBy(array('name' => $typeF['name']));
+			if (count($typeFigure) == 0)
 			{
-          		$this->em->persist($typeF);
+				$t = new TypeFigure();
+				$t->setName($typeF['name']);
+          		$this->em->persist($t);
+				$this->em->flush();
+				$figure->addTypeFigure($t);
 			}
 			else
 			{
-				$figure->removeTypeFigure($typeF);
 				foreach($typeFigure as $f)
         		{
 					$figure->addTypeFigure($f);
@@ -59,6 +60,46 @@ class FigureService
 			}
 			
         }
+		$figure->setUser($user);
+		$figure->setUpdateDate(new \DateTime());
+		$this->em ->persist($figure);
+		$this->em ->flush();
+		return null;
+	}
+	
+	public function getFigure($name)
+	{
+		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('name' => $name));
+	}
+	
+	public function saveFigure($figure, $listTypeFigure)
+	{
+		foreach($figure->getTypeFigure() as $typeF)
+        {
+			$figure->removeTypeFigure($typeF);			
+        }
+		foreach($listTypeFigure as $typeF)
+        {
+			$typeFigure = $this->em->getRepository('STFigureBundle:TypeFigure')->findBy(array('name' => $typeF['name']));
+			if (count($typeFigure) == 0)
+			{
+				$t = new TypeFigure();
+				$t->setName($typeF['name']);
+          		$this->em->persist($t);
+				$this->em->flush();
+				$figure->addTypeFigure($t);
+			}
+			else
+			{
+				foreach($typeFigure as $f)
+        		{
+					$figure->addTypeFigure($f);
+					$this->em->persist($f);
+				}
+			}
+			
+        }
+		
 		$figure->setUpdateDate(new \DateTime());
 		$this->em ->persist($figure);
 		

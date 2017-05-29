@@ -15,11 +15,11 @@ st_figure_edit:
     defaults: { _controller: STFigureBundle:Figure:editFigure }
 
 st_figure_view_by_10:
-    path:     /figure/view/{id}/{offset}
+    path:     /figure/view/{name}/{offset}
     defaults: { _controller: STFigureBundle:Figure:viewFigureBy10 }
 
 st_figure_view:
-    path:     /figure/view/{id}
+    path:     /figure/view/{name}
     defaults: { _controller: STFigureBundle:Figure:viewFigure }
 
 st_figure_delete:
