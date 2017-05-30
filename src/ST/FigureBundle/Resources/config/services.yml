@@ -1,4 +1,6 @@
 services:
-#    st_figure.example:
-#        class: ST\FigureBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    figure_service:
+        class: ST\FigureBundle\Models\Service\FigureService
+        arguments: [ "@doctrine.orm.entity_manager" , "@service_container" ]
+    layout_service:
+        class: ST\FigureBundle\Models\Service\LayoutService

@@ -75,14 +75,6 @@ stof_doctrine_extensions:
     orm:
         default:
             sluggable: true
-
-fos_user:
-    db_driver:     orm                       # Le type de BDD à utiliser, nous utilisons l'ORM Doctrine depuis le début
-    firewall_name: main                      # Le nom du firewall derrière lequel on utilisera ces utilisateurs
-    user_class:    ST\UserBundle\Entity\User # La classe de l'entité User que nous utilisons
-    from_email:
-        address:        webmaster@example.com
-        sender_name:    Admin
 fm_elfinder:
     #assets_path: snowtricks/web/assets
     instances:

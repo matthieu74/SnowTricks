@@ -72,6 +72,11 @@ class FigureService
 		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('name' => $name));
 	}
 	
+	public function getFigureById($id)
+	{
+		return $this->em ->getRepository('STFigureBundle:Figure')->find($id);
+	}
+	
 	public function saveFigure($figure, $listTypeFigure)
 	{
 		foreach($figure->getTypeFigure() as $typeF)

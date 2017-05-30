@@ -76,12 +76,17 @@ class FigureController extends Controller
      */
 	public function editFigureAction($id, Request $request)
 	{
-    	$figure = $this->get('figure_service')->getFigure($id);
+    	$figure = $this->get('figure_service')->getFigureById($id);
 		$form = $this->get('form.factory')->create(FigureType::class, $figure);
 		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
-			$this->get('figure_service')->saveFigure($figure, $_POST['figure']['typeFigure']);
+			$typeFigureArray = [];
+			if (array_key_exists('typeFigure',$_POST['figure']))
+			{
+				$typeFigureArray = $_POST['figure']['typeFigure'];
+			}
+			$this->get('figure_service')->saveFigure($figure, $typeFigureArray);
 			$this->get('session')->getFlashBag()->add(
 						'notice',
 						'Votre figure a bien été modifié'

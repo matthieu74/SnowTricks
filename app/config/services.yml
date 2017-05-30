@@ -4,11 +4,11 @@ parameters:
 #    parameter_name: value
 
 services:
-    figure_service:
-        class: ST\FigureBundle\Models\Service\FigureService
-        arguments: [ "@doctrine.orm.entity_manager" , "@service_container" ]
-    layout_service:
-        class: ST\FigureBundle\Models\Service\LayoutService
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.security.login_form_authenticator:
+        class: ST\UserBundle\Security\LoginFormAuthenticator
+        autowire: true
+    app.doctrine.hash_password_listener:
+        class: ST\UserBundle\Doctrine\HashPasswordListener
+        autowire: true
+        tags:
+            - { name: doctrine.event_subscriber }
