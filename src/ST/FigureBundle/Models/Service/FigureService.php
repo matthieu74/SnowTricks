@@ -17,7 +17,7 @@ class FigureService
 		$firstRow = intval($offset) * 5;
 		
 		$query = $this->em->createQueryBuilder();
-		$query->select('f.id,f.name, f.updateDate,u.username')
+		$query->select('f.id,f.name,f.slug, f.updateDate,u.username')
 			->from('ST\FigureBundle\Entity\Figure', 'f')
 			->leftjoin('f.user', 'u')
 			->addOrderBy('f.updateDate', 'DESC')
@@ -67,9 +67,9 @@ class FigureService
 		return null;
 	}
 	
-	public function getFigure($name)
+	public function getFigure($slug)
 	{
-		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('name' => $name));
+		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('slug' => $slug));
 	}
 	
 	public function getFigureById($id)
@@ -142,5 +142,10 @@ class FigureService
 		$comment->setUpdateDate(new \DateTime());
 		$this->em->persist($comment);
 		$this->em->flush();
+	}
+	
+	public function getAllTypeFigure()
+	{
+		return $this->em->getRepository('STFigureBundle:TypeFigure')->findAll();
 	}
 }

@@ -47,8 +47,13 @@ class FigureController extends Controller
 		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
+			$typeFigureArray = [];
+			if (array_key_exists('typeFigure',$_POST['figure']))
+			{
+				$typeFigureArray = $_POST['figure']['typeFigure'];
+			}
 			$results = $this->get('figure_service')->addFigure($this->container->get('security.token_storage')->getToken()->getUser(),
-									  $figure, $_POST['figure']['typeFigure']);
+									  $figure, $typeFigureArray);
 			if (!is_null($results))
 			{
 				$this->get('session')->getFlashBag()->add(
@@ -65,9 +70,9 @@ class FigureController extends Controller
 			);
 			return $this->redirectToRoute('st_home');
 		}
-		
+		$categories = $this->get('figure_service')->getAllTypeFigure();
 		return $this->render('STFigureBundle:Core:edit.html.twig', array(
-      							'form' => $form->createView(),
+      							'form' => $form->createView(), 'categories' => $categories,
     						));
 	}
 	
@@ -93,9 +98,9 @@ class FigureController extends Controller
 			);
 			return $this->redirectToRoute('st_home');
 		}
-		
+		$categories = $this->get('figure_service')->getAllTypeFigure();
 		return $this->render('STFigureBundle:Core:edit.html.twig', array(
-      							'form' => $form->createView(),
+      							'form' => $form->createView(), 'categories' => $categories,
     		));
 	}
 	

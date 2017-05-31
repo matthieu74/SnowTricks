@@ -1,33 +1,42 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <title>{% block title %}AquaNote!{% endblock %}</title>
-        {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
-            <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-            <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/font-awesome.min.css') }}">
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+		<meta charset="utf-8">
+		{% block stylesheets %}
+		{# On charge le CSS de bootstrap depuis le site directement #}
+			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+			<link href="{{ asset('css/snow_tricks.css') }}" rel="stylesheet">
+			<!-- Custom Fonts -->
+			<link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+			<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+			<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+		{% endblock %}
     </head>
-    <body>
-        <div class="search-bar">
-            <form method="GET" action="" class="js-sea-search sea-search">
-                <input type="search" name="q" placeholder="Search Sea Creatures" autocomplete="off" class="search-input">
-            </form>
-        </div>
-        <header class="header">
-            <img class="logo-icon" src="{{ asset('images/aquanote-logo.png') }}">
-            <h1 class="logo">AquaNote</h1>
-            <ul class="navi">
-                <li class="search"><a href="#" class="js-header-search-toggle"><i class="fa fa-search"></i></a></li>
-                {% if is_granted('ROLE_USER') %}
-                    <li><a href="{{ path('security_logout') }}">Logout</a></li>
-                {% else %}
-                    <li><a href="{{ path('security_login') }}">Login</a></li>
-                {% endif %}
-            </ul>
-        </header>
+    <body style = "background:url({{ asset('img/2.jpg') }}) no-repeat center fixed;   background-size: cover;">
+		 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+  			<div class="container-fluid">
+				<div class="navbar-header page-scroll">
+					<a class="navbar-brand" href="{{ path('st_home') }}">Home</a>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+					{% if is_granted("ROLE_USER") %}
+						<li><a href="{{ path('st_figure_add') }}"><span class="glyphicon glyphicon-plus"></span>Add a figure</a> </li>
+						<li><a href="#"><span class="glyphicon glyphicon-user"></span>{{ app.user.username }}</a> </li>
+						<li><a href="{{ path('st_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+					{% else %}
+						<li><a data-toggle="modal" href="{{ path('st_register') }}" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+						<li><a data-toggle="modal" href="{{ path('st_login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					{% endif %}
+					
+					
+				</ul>
+  			</div>
+		</nav>
+      <div class="container">
+    <div class="row vertical-offset-100">
+    	<div class="col-md-4 col-md-offset-4">
+    		<div class="panel panel-default">
+
         <div class="main-content">
             {% for msg in app.session.flashBag.get('success') %}
                 <div class="alert alert-success">
@@ -36,9 +45,10 @@
             {% endfor %}
             {% block body %}{% endblock %}
         </div>
-        <div class="footer">
-            <p class="footer-text">Made with <span class="heart"><3</span> <a href="https://knpuniversity.com">KnpUniversity</a></p>
-        </div>
+		</div>
+		</div>
+		  </div>
+		</div>
         {% block javascripts %}
             <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
             <script src="{{ asset('js/main.js') }}"></script>

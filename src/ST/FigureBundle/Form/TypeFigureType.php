@@ -18,7 +18,7 @@ class TypeFigureType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name',null, array('label' => false));
+        $builder->add('name',null, array('label' => false, 'attr' => array('list' => 'categories')));
     }
     
     /**
