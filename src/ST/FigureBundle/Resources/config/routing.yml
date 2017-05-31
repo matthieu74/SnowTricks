@@ -1,0 +1,3 @@
+st_home:
+    path: /
+    defaults: { _controller: STFigureBundle:Figure:index }

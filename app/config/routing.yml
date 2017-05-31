@@ -1,0 +1,3 @@
+st_figure:
+    resource: "@STFigureBundle/Resources/config/routing.yml"
+    prefix:   /
