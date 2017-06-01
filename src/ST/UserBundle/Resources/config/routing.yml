@@ -1,0 +1,11 @@
+st_register:
+    path: /register
+    defaults: { _controller: STUserBundle:User:register }
+    
+st_logout:
+    path: /logout
+    defaults: { _controller: STUserBundle:Security:logout }
+    
+st_login:
+    path: /
+    defaults: { _controller: STUserBundle:Security:login }
