@@ -4,3 +4,11 @@ parameters:
 #    parameter_name: value
 
 services:
+    app.security.login_form_authenticator:
+        class: ST\UserBundle\Security\LoginFormAuthenticator
+        autowire: true
+    app.doctrine.hash_password_listener:
+        class: ST\UserBundle\Doctrine\HashPasswordListener
+        autowire: true
+        tags:
+            - { name: doctrine.event_subscriber }
