@@ -155,7 +155,7 @@ class FigureController extends Controller
      */
 	public function deleteFigureAction($id, Request $request)
 	{
-    	$figure = $this->get('figure_service')->getFigure($id);
+    	$figure = $this->get('figure_service')->getFigureById($id);
 		$form = $this->get('form.factory')->create(FigureDeleteType::class, $figure);
 		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())

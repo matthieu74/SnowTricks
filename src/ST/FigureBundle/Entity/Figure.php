@@ -65,8 +65,22 @@ class Figure
    */
   private $typeFigure;
 
+	/**
+     * @ORM\Column(name="active", type="integer")
+     */
+	private $active;
 	
-	 public function addTypeFigure(TypeFigure $typeFigure)
+	public function setActive($active)
+	{
+		$this->active = $active;
+	}
+	
+	public function getActive()
+	{
+		return $this->active;
+	}
+	
+	public function addTypeFigure(TypeFigure $typeFigure)
     {
         if ($this->typeFigure->contains($typeFigure)) {
             return;

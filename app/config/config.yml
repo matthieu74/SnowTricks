@@ -89,14 +89,14 @@ fm_elfinder:
                     uploads:
                         driver:           LocalFileSystem
                         path:             uploads
-                        upload_allow:     ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
+                        upload_allow:     ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'audio/mpeg', 'text/csv', 'video/mp4', 'video/webm']
                         upload_deny:      ['all']
                         upload_max_size:  8M
 ivory_ck_editor:
     default_config:    my_custom_config
     configs:
         my_custom_config:
-            toolbar:                    standard
+            toolbar:                   [["Source","-",],["Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo"],["Find","Replace","-","SelectAll","-","Scayt"],"\/",["Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat"],["NumberedList","BulletedList","-","Outdent","Indent","-","Blockquote","CreateDiv","-","JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock","-","BidiLtr","BidiRtl"],["Link","Unlink","Anchor"],["Image","Flash","Table","HorizontalRule","SpecialChar","Smiley","PageBreak","Iframe"],"\/",["Styles","Format","Font","FontSize","TextColor","BGColor"],["TextColor","BGColor"],["Maximize","ShowBlocks"]]
             filebrowserBrowseRoute:           elfinder
             filebrowserBrowseRouteParameters:
                 instance: ckeditor

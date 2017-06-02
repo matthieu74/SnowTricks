@@ -20,6 +20,7 @@ class FigureService
 		$query->select('f.id,f.name,f.slug, f.updateDate,u.username')
 			->from('ST\FigureBundle\Entity\Figure', 'f')
 			->leftjoin('f.user', 'u')
+			->where('f.active = 0')
 			->addOrderBy('f.updateDate', 'DESC')
 			 ->setMaxResults(9)
             ->setFirstResult($firstRow);
@@ -114,7 +115,8 @@ class FigureService
 	
 	public function deleteFigure($figure)
 	{
-		$this->em->remove($figure);
+		$figure->setActive(1);
+		$this->em ->persist($figure);
 		$this->em->flush();
 	}
 	
