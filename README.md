@@ -21,9 +21,9 @@ fill the data base with the SQL script
     php bin/console doctrine:fixtures:load
 
 ## 4. How to configure virtual hosts on your localhost
-### 1. we will create a virtual host under the name: "myBlog.dev"
+### 1. we will create a virtual host under the name: "snowtricks.dev"
 - in the repository *C:\Windows\System32\drivers\etc*; open “hosts” file with admin privileges and add the following to its end;
-127.0.0.1 *myblog.dev* 
+127.0.0.1 *snowtricks.dev* 
 ### 2.  allow virtual hosts in httpd.conf  
 - ckick on wamp tray icon and Apache->httpd.conf  
 -search for *# Include conf/extra/httpd-vhosts.conf* and comment it out (by deleting the # caracter): *Include conf/extra/httpd-vhosts.conf*  
