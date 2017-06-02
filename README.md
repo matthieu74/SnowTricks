@@ -18,4 +18,4 @@ then create the table :
 
 fill the data base with the SQL script
 
-    symfony.sql
+    php bin/console doctrine:fixtures:load
