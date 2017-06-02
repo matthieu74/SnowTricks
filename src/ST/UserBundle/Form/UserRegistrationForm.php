@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 class UserRegistrationForm extends AbstractType
@@ -17,6 +18,7 @@ class UserRegistrationForm extends AbstractType
 												'placeholder' => 'Username'
 												
 											)))
+			->add('file', FileType::class)
             ->add('plainPassword', RepeatedType::class, array('type' => PasswordType::class,
 											'attr' => array(
 												'placeholder' => 'Password'

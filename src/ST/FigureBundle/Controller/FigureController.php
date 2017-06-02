@@ -22,7 +22,7 @@ class FigureController extends Controller
     {
 		$results = $this->get('figure_service')->getFigures($offset);
 
-		$paging = $this->get('layout_service')->getPaging($results,5, $offset);
+		$paging = $this->get('layout_service')->getPaging($results,9, $offset);
 		$array = array(
 						'title' => 'snow tricks',
 						'figures' => $results,
@@ -124,7 +124,7 @@ class FigureController extends Controller
 			$user = $this->container->get('security.token_storage')->getToken()->getUser();
 			$this->get('figure_service')->saveComment($user,$figure, $comment);
 			return $this->redirectToRoute('st_figure_view_by_10', array(
-        												'id' => $id,
+        												'name' => $name,
 														'offset' => $offset));
 		}
 		

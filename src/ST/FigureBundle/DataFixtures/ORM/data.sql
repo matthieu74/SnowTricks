@@ -1,0 +1,1 @@
+INSERT INTO `figure` (`id`, `user_id`, `name`, `description`, `updatedate`, `slug`) VALUES (NULL, '4', 'fixture', 'cxsdcsdsdzdzd', '2017-06-02 00:00:00', 'fixture');

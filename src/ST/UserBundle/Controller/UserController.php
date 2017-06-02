@@ -17,6 +17,7 @@ class UserController extends Controller
         if ($form->isValid()) {
             /** @var User $user */
             $user = $form->getData();
+			$user->upload();
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();

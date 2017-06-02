@@ -14,14 +14,14 @@ class FigureService
 	
 	public function getFigures($offset)
 	{
-		$firstRow = intval($offset) * 5;
+		$firstRow = intval($offset) * 9;
 		
 		$query = $this->em->createQueryBuilder();
 		$query->select('f.id,f.name,f.slug, f.updateDate,u.username')
 			->from('ST\FigureBundle\Entity\Figure', 'f')
 			->leftjoin('f.user', 'u')
 			->addOrderBy('f.updateDate', 'DESC')
-			 ->setMaxResults(5)
+			 ->setMaxResults(9)
             ->setFirstResult($firstRow);
 
 		return $query->getQuery()->getResult();
@@ -123,6 +123,7 @@ class FigureService
 		$startOffset = $offset * 10;
 		return $this->em->getRepository('STFigureBundle:Comment')
 		 			->findBy(array('figure' => $figure), array('updateDate' => 'DESC'), 10, $startOffset);
+		
 	}
 	
 	public function getTypesFigures($figure)

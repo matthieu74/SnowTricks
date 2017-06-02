@@ -3,10 +3,11 @@
 {% block figures %}
 <section id="myFigure">
         <div class="container">
-			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+			<div class="col-md-12">
 				<div class="row">
+					
 					{% for figure in figures %}
-
+					<div class="col-md-4">
 						<h2><a href="{{ path('st_figure_view', {'name': figure.slug}) }}">{{ figure.name }}</a></h2>
 						<p>Posted by <i>{{ figure.username }}</i> on {{ figure.updateDate|date("d/m/y") }}</p>
 						{% if is_granted("ROLE_USER") %}
@@ -14,7 +15,10 @@
 							<a href="{{ path('st_figure_delete', {'id': figure.id}) }}" class="glyphicon glyphicon-trash">delete</a>
 						{% endif %}
 						<hr class="star-primary">
+					</div>
+						
 					{% endfor %}
+					
 				</div>
 				<div class="row">
 					<div>

@@ -20,17 +20,28 @@
             
 				<hr>
 				{% for comment in comments %}
-				<div class="row">
-					{{ comment.user.username }} on {{ comment.updatedate|date("d/m/y") }}
-					<br>
-					<p>{{ comment.comment|raw }}</p>	
-				</div>
+				
+					<div class="row">
+						{% if comment.user.url %}
+							<a class="pull-left" href="#">
+								<img src="{{ asset('uploads/img/') }}{{ comment.user.url }}" width="64" height="64">
+							</a>
+						{% else %}
+							<a class="pull-left" href="#">
+								<img src="{{ asset('img/') }}img_avatar1.png" class="media-object" style="width:64px">
+							</a>
+						{% endif %}
+						{{ comment.user.username }} on {{ comment.updatedate|date("d/m/y") }}
+						<br>
+						<p>{{ comment.comment|raw }}</p>	
+					</div>
+				
 				{% endfor %}
 				<div class="row">
 					<ul class="pager">
-							<li class="next">
-								<a href="{{ path('st_figure_view_by_10', {'name':figure.name, 'offset': paging.newestOffset}) }}" class="{{ paging.newestDisable }}">newest</a>
-								<a href="{{ path('st_figure_view_by_10', {'name':figure.name,'offset': paging.oldestOffset}) }}" class="{{ paging.oldestDisable }}">oldest</a>
+						<li class="next">
+							<a href="{{ path('st_figure_view_by_10', {'name':figure.name, 'offset': paging.newestOffset}) }}" class="{{ paging.newestDisable }}">newest</a>
+							<a href="{{ path('st_figure_view_by_10', {'name':figure.name, 'offset': paging.oldestOffset}) }}" class="{{ paging.oldestDisable }}">oldest</a>
 						</li>
 					</ul>
 				</div>
