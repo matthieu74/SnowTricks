@@ -5,20 +5,17 @@
         <div class="container">
 			<div class="col-md-12">
 				<div class="row">
-					
 					{% for figure in figures %}
-					<div class="col-md-4">
-						<h2><a href="{{ path('st_figure_view', {'name': figure.slug}) }}">{{ figure.name }}</a></h2>
-						<p>Posted by <i>{{ figure.username }}</i> on {{ figure.updateDate|date("d/m/y") }}</p>
-						{% if is_granted("ROLE_USER") %}
-							<a href="{{ path('st_figure_edit', {'id': figure.id}) }}" class="glyphicon glyphicon-pencil">edit</a>
-							<a href="{{ path('st_figure_delete', {'id': figure.id}) }}" class="glyphicon glyphicon-trash">delete</a>
-						{% endif %}
-						<hr class="star-primary">
-					</div>
-						
+						<div class="col-md-4 col-sm-6 col-xs-12">
+							<h2><a href="{{ path('st_figure_view', {'name': figure.slug}) }}">{{ figure.name }}</a></h2>
+							<p>Posted by <i>{{ figure.username }}</i> on {{ figure.updateDate|date("d/m/y") }}</p>
+							{% if is_granted("ROLE_USER") %}
+								<a href="{{ path('st_figure_edit', {'id': figure.id}) }}" class="glyphicon glyphicon-pencil">edit</a>
+								<a href="{{ path('st_figure_delete', {'id': figure.id}) }}" class="glyphicon glyphicon-trash">delete</a>
+							{% endif %}
+							<hr class="star-primary">
+						</div>
 					{% endfor %}
-					
 				</div>
 				<div class="row">
 					<div>
