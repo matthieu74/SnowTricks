@@ -3,6 +3,8 @@ namespace ST\FigureBundle\Models\Service;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use ST\FigureBundle\Entity\TypeFigure;
+use Symfony\Component\DomCrawler\Crawler;
+
 
 class FigureService
 {
@@ -17,7 +19,7 @@ class FigureService
 		$firstRow = intval($offset) * 9;
 		
 		$query = $this->em->createQueryBuilder();
-		$query->select('f.id,f.name,f.slug, f.updateDate,u.username')
+		$query->select('f.id,f.name,f.slug, f.updateDate,u.username, f.image')
 			->from('ST\FigureBundle\Entity\Figure', 'f')
 			->leftjoin('f.user', 'u')
 			->where('f.active = 0')
@@ -61,6 +63,7 @@ class FigureService
 			}
 			
         }
+        $this->getImage($figure);
 		$figure->setUser($user);
 		$figure->setUpdateDate(new \DateTime());
 		$this->em ->persist($figure);
@@ -105,7 +108,8 @@ class FigureService
 			}
 			
         }
-		
+        
+        $this->getImage($figure);
 		$figure->setUpdateDate(new \DateTime());
 		$this->em ->persist($figure);
 		
@@ -113,6 +117,18 @@ class FigureService
 		$this->em ->flush();
 	}
 	
+    private function getImage($figure)
+    {
+        $doc = new \DOMDocument();
+        $doc->loadHTML($figure->getDescription());
+
+        $tags = $doc->getElementsByTagName('img');
+
+        foreach ($tags as $tag) {
+                $figure->setImage(substr($tag->getAttribute('src'), 1));
+        }
+    }
+    
 	public function deleteFigure($figure)
 	{
 		$figure->setActive(1);

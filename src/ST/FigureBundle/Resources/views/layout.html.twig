@@ -50,32 +50,14 @@
             </div>
         </div>
     </header>
-	<div class="modal fade" id="myLogin" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body">
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="modal fade" id="myRegister" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body">
-				</div>
-			</div>
-		</div>
-	</div>
-	  {% for flashMessage in app.session.flashbag.get('notice') %}
-		<div class="flash-notice">
-			{{ flashMessage }}
-		</div>
-	{% endfor %}
-	  {% for flashMessage in app.session.flashbag.get('error') %}
-		<div class="flash-error">
-			{{ flashMessage }}
-		</div>
-	{% endfor %}
+	
+	 {% for label, flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+            <div class="alert alert-{{ label }}">
+                {{ flash }}
+            </div>
+        {% endfor %}
+    {% endfor %}
 	  
 	  
 	{% block figures %}{% endblock %}

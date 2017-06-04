@@ -143,8 +143,7 @@ class FigureController extends Controller
 		//return var_dump($listTypeFigure);
 		return $this->render('STFigureBundle:Core:detail.html.twig', $array);
 	}
-	
-	
+		
 	public function viewFigureAction($name, Request $request)
 	{
 		return $this->viewFigureBy10Action($name,0, $request);

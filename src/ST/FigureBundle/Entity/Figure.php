@@ -68,8 +68,24 @@ class Figure
 	/**
      * @ORM\Column(name="active", type="integer")
      */
-	private $active;
-	
+	private $active = 0;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+    
+    public function getImage()
+    {
+        return $this->image;
+    }
+    
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
 	public function setActive($active)
 	{
 		$this->active = $active;

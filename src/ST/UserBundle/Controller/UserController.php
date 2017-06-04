@@ -21,14 +21,7 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            $this->addFlash('success', 'Welcome '.$user->getUsername());
-            return $this->get('security.authentication.guard_handler')
-                ->authenticateUserAndHandleSuccess(
-                    $user,
-                    $request,
-                    $this->get('app.security.login_form_authenticator'),
-                    'main'
-                );
+            return $this->redirectToRoute('st_home');
         }
         return $this->render('STUserBundle:User:register.html.twig', [
             'form' => $form->createView()
