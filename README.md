@@ -27,7 +27,7 @@ fill the data base with the SQL script
 ### 2.  allow virtual hosts in httpd.conf  
 - ckick on wamp tray icon and Apache->httpd.conf  
 -search for *# Include conf/extra/httpd-vhosts.conf* and comment it out (by deleting the # caracter): *Include conf/extra/httpd-vhosts.conf*  
-- then at the bottom of the file add the *snowtricks* project like this:  
+- then at the bottom of the file *httpd-vhosts.conf* add the *snowtricks* project like this:  
 ```
     <VirtualHost *:80>
 	    ServerName myblog.dev
