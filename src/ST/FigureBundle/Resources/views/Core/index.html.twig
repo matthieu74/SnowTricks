@@ -2,16 +2,16 @@
 
 {% block figures %}
 <section id="myFigure">
-        <div class="container-fluid">
+        <div class="container">
 			<div class="col-md-12">
 				<div class="row">
                     {% for figure in figures %}
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <h2><a href="{{ path('st_figure_view', {'name': figure.slug}) }}">{{ figure.name }}</a></h2>
                             {% if figure.image %}
-                                <img alt="" src="{{ asset('/')}}{{ figure.image }}" class="img-thumbnail" />
+                                <img alt="" src="{{ asset('/')}}{{ figure.image }}" class="img-responsive" />
                             {% else %}
-                                <img alt="" src="{{ asset('img/login.jpg') }}" class="img-thumbnail" />
+                                <img alt="" src="{{ asset('img/login.jpg') }}" class="img-responsive" />
                             {% endif %}
                             <p>Posted by <i>{{ figure.username }}</i> on {{ figure.updateDate|date("d/m/y") }}</p>
                             {% if is_granted("ROLE_USER") %}
