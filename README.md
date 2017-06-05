@@ -30,7 +30,7 @@ fill the data base with the SQL script
 - then at the bottom of the file *httpd-vhosts.conf* add the *snowtricks* project like this:  
 ```
     <VirtualHost *:80>
-	    ServerName myblog.dev
+	    ServerName snowtricks.dev
 	    DocumentRoot C:/web/snowtricks/web
 	    <Directory  "C:/web/snowtricks/web/">
     		Options +Indexes +Includes +FollowSymLinks +MultiViews
