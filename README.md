@@ -18,7 +18,9 @@ then create the table :
 
 fill the data base with the SQL script
 
-    php bin/console doctrine:fixtures:load
+    php bin/console snowtricks:init-website
+Or if you want to keep your data
+    php bin/console snowtricks:init-website --append
 
 ## 4. How to configure virtual hosts on your localhost
 ### 1. we will create a virtual host under the name: "snowtricks.dev"
