@@ -20,6 +20,7 @@ fill the data base with the SQL script
 
     php bin/console snowtricks:init-website
 Or if you want to keep your data
+
     php bin/console snowtricks:init-website --append
 
 ## 4. How to configure virtual hosts on your localhost
