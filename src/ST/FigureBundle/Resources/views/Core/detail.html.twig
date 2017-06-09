@@ -1,0 +1,23 @@
+{% extends "STFigureBundle::layout.html.twig" %}
+
+{% block figures %}
+<section id="myFigure">
+	<div class="container">
+		<div class="col-lg-10 col-lg-offset-1">
+			<div class="row">
+				<h2>{{ figure.name }}</h2>
+				Posted by <i>{{ figure.user.username }}</i> on {{ figure.updateDate|date("d/m/y") }}
+				<p> {{ figure.description|raw }}</p>
+				{% for typeFigure in types_figure %}
+					<span class = "glyphicon glyphicon-bookmark">{{ typeFigure.name }}</span>
+				{% endfor %}
+				<br>
+				{% if is_granted("ROLE_USER") %}
+					<a href="{{ path('st_figure_edit', {'id': figure.id}) }}" class="glyphicon glyphicon-pencil">edit</a>
+					<a href="{{ path('st_figure_delete', {'id': figure.id}) }}" class="glyphicon glyphicon-trash">delete</a>
+				{% endif %}
+			</div>
+        </div>
+	</div>
+</section>
+{% endblock %}

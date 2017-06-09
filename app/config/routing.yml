@@ -1,6 +1,9 @@
 st_auth:
     resource: "@STUserBundle/Resources/config/routing.yml"
     prefix:   /login
+
+elfinder:
+    resource: "@FMElfinderBundle/Resources/config/routing.yml"
 st_figure:
     resource: "@STFigureBundle/Resources/config/routing.yml"
     prefix:   /
