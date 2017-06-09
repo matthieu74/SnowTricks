@@ -1,0 +1,52 @@
+{% extends "STFigureBundle::layout.html.twig" %}
+
+{% block figures %}
+<section id="myFigure">
+        <div class="container">
+			<div class="col-md-12">
+				<div class="row">
+					{% set iloop = 0 %}
+                    {% for figure in figures %}
+                        <div class="col-md-4 portfolio-item">
+                            
+                            {% if figure.image %}
+                                <img alt="" src="{{ asset('/')}}{{ figure.image }}" class="img-responsive img-portfolio cover" />
+                            {% else %}
+                                <img alt="" src="{{ asset('img/login.jpg') }}" class="img-responsive img-portfolio cover" />
+                            {% endif %}
+							<h3><a href="{{ path('st_figure_view', {'name': figure.slug}) }}">{{ figure.name }}</a></h3>
+                            <p>Posted by <i>{{ figure.username }}</i> on {{ figure.updateDate|date("d/m/y") }}</p>
+                            {% if is_granted("ROLE_USER") %}
+                                <a href="{{ path('st_figure_edit', {'id': figure.id}) }}" class="glyphicon glyphicon-pencil">edit</a>
+                                <a href="{{ path('st_figure_delete', {'id': figure.id}) }}" class="glyphicon glyphicon-trash">delete</a>
+                            {% endif %}
+                            <hr class="star-primary">
+							
+                        </div>
+					{% set iloop = iloop + 1 %}
+							{% if iloop is divisible by(3) %}
+							<div class="row"></div>
+							{% endif %}
+                    {% endfor %}
+                </div>
+				<div class="row">
+					<div>
+						<ul class="pager">
+							
+							<li class="next">
+								<a href="{{ path('st_figure_Par5', {'offset': paging.newestOffset}) }}" class="{{ paging.newestDisable }}">newest</a>
+								
+								<a href="{{ path('st_figure_Par5', {'offset': paging.oldestOffset}) }}" class="{{ paging.oldestDisable }}">oldest</a>
+							
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+			</div>			
+        </div>
+  </section>
+  
+
+{% endblock %}

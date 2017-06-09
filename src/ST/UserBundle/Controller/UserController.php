@@ -1,7 +1,7 @@
 <?php
 namespace ST\UserBundle\Controller;
 
-use ST\UserBundle\Entity\User;
+
 use ST\UserBundle\Form\UserRegistrationForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,17 +17,10 @@ class UserController extends Controller
         if ($form->isValid()) {
             /** @var User $user */
             $user = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-            $this->addFlash('success', 'Welcome '.$user->getUsername());
-            return $this->get('security.authentication.guard_handler')
-                ->authenticateUserAndHandleSuccess(
-                    $user,
-                    $request,
-                    $this->get('app.security.login_form_authenticator'),
-                    'main'
-                );
+			$user->upload();
+           
+            $this->get('user_service')->addUser($user);
+            return $this->redirectToRoute('st_home');
         }
         return $this->render('STUserBundle:User:register.html.twig', [
             'form' => $form->createView()
