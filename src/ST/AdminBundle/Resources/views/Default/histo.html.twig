@@ -1,0 +1,15 @@
+{% extends "STAdminBundle::layout.html.twig" %}
+
+{% block admin %}
+    <div class="container">
+      <h2>Historique de la page : </h2>
+      <ul class="list-group">
+      	{% for version in histo %}
+        	<li class="list-group-item">
+        		{{ version.name}} posted by {{ version.user.username}} on {{ version.updateDateHisto |date("d/m/y H:i:s") }}
+        		<span class = 'pull-right pull-right-margin'><a href = "{{ path('st_admin_view', {'id': version.idfigure, 'version': version.id}) }}">Restore</a></span>
+         {% endfor %}
+        
+      </ul>
+    </div>
+{% endblock %}

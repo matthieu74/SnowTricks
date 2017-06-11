@@ -71,6 +71,16 @@ class User implements UserInterface
 		return $this->url;
 	}
 	
+	public function setAlt($alt)
+	{
+		$this->alt = $alt;
+	}
+	
+	public function setUrl($url)
+	{
+		$this->url = $url;
+	}
+	
     // needed by the security system
     public function getUsername()
     {

@@ -4,6 +4,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use ST\FigureBundle\Entity\TypeFigure;
 use Symfony\Component\DomCrawler\Crawler;
+use ST\FigureBundle\Entity\FigureHisto;
 
 
 class FigureService
@@ -30,6 +31,21 @@ class FigureService
 		return $query->getQuery()->getResult();
 	}
 	
+	public function getFigure($slug)
+	{
+		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('slug' => $slug));
+	}
+	
+	public function getFigurebyName($name)
+	{
+		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('name' => $name));
+	}
+	
+	public function getFigureById($id)
+	{
+		return $this->em ->getRepository('STFigureBundle:Figure')->find($id);
+	}
+	
 	public function addFigure($user, $figure, $listTypeFigure)
 	{
 		$figureWithSameName = $this->em->getRepository('STFigureBundle:Figure')->findBy(array('name' => $figure->getName()));
@@ -44,11 +60,27 @@ class FigureService
 		
 		foreach($listTypeFigure as $typeF)
         {
-			$typeFigure = $this->em->getRepository('STFigureBundle:TypeFigure')->findBy(array('name' => $typeF['name']));
+			$nameCat = '';
+			if (is_string($typeF))
+			{
+				$nameCat = $typeF;
+			}
+			else
+			{
+				if (array_key_exists('name', $typeF))
+				{
+					$nameCat = $typeF['name'];
+				}
+				else
+				{
+					$nameCat = $typeF;
+				}
+			}
+			$typeFigure = $this->em->getRepository('STFigureBundle:TypeFigure')->findBy(array('name' => $nameCat));
 			if (count($typeFigure) == 0)
 			{
 				$t = new TypeFigure();
-				$t->setName($typeF['name']);
+				$t->setName($nameCat);
           		$this->em->persist($t);
 				$this->em->flush();
 				$figure->addTypeFigure($t);
@@ -69,16 +101,6 @@ class FigureService
 		$this->em ->persist($figure);
 		$this->em ->flush();
 		return null;
-	}
-	
-	public function getFigure($slug)
-	{
-		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('slug' => $slug));
-	}
-	
-	public function getFigureById($id)
-	{
-		return $this->em ->getRepository('STFigureBundle:Figure')->find($id);
 	}
 	
 	public function saveFigure($figure, $listTypeFigure)
@@ -108,25 +130,31 @@ class FigureService
 			}
 			
         }
-        
         $this->getImage($figure);
-		$figure->setUpdateDate(new \DateTime());
 		$this->em ->persist($figure);
-		
-		
 		$this->em ->flush();
 	}
 	
     private function getImage($figure)
-    {
-        $doc = new \DOMDocument();
-        $doc->loadHTML($figure->getDescription());
+    {   
+		try 
+		{
+			$doc = new \DOMDocument();
+        	$doc->loadHTML($figure->getDescription());
+		
 
-        $tags = $doc->getElementsByTagName('img');
+			$tags = $doc->getElementsByTagName('img');
 
-        foreach ($tags as $tag) {
-                $figure->setImage(substr($tag->getAttribute('src'), 1));
-        }
+			foreach ($tags as $tag) 
+			{
+				$figure->setImage(substr($tag->getAttribute('src'), 1));
+				return;
+			}
+		}
+		catch (Exception $e) 
+		{
+			return;
+		}
     }
     
 	public function deleteFigure($figure)
@@ -163,8 +191,32 @@ class FigureService
 		$this->em->flush();
 	}
 	
+	public function addComment($comment)
+	{
+		$this->em->persist($comment);
+		$this->em->flush();
+	}
+	
 	public function getAllTypeFigure()
 	{
 		return $this->em->getRepository('STFigureBundle:TypeFigure')->findAll();
 	}
+	
+	
+	public function deleteAllData()
+	{
+		$sql = 'DELETE FROM STFigureBundle:Comment';
+		$stmt = $this->em->createQuery($sql);
+		$stmt->execute();
+		
+		
+		$sql = 'DELETE FROM STFigureBundle:Figure';
+		$stmt = $this->em->createQuery($sql);
+		$stmt->execute();
+		
+		$sql = 'DELETE FROM STFigureBundle:Typefigure';
+		$stmt = $this->em->createQuery($sql);
+		$stmt->execute();
+	}
+	
 }

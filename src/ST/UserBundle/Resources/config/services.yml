@@ -1,1 +1,5 @@
 # src/ST/UserBundle/Resources/config/services.yml
+services:
+    user_service:
+        class: ST\UserBundle\Models\Service\UserService
+        arguments: [ "@doctrine.orm.entity_manager" , "@service_container" ]

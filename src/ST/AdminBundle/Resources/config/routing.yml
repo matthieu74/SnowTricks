@@ -1,3 +1,13 @@
 st_admin_homepage:
     path:     /
-    defaults: { _controller: STAdminBundle:Default:index }
+    defaults: { _controller: STAdminBundle:Admin:index }
+
+st_admin_activate:
+    path:    /activate/{id}/{actValue}
+    defaults: { _controller: STAdminBundle:Admin:activate }
+st_admin_histo:
+    path:    /histo/{id}
+    defaults: { _controller: STAdminBundle:Admin:histo }
+st_admin_view:
+    path:    /view/{id}/{version}
+    defaults: { _controller: STAdminBundle:Admin:view }

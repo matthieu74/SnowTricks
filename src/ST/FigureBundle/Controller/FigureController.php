@@ -4,12 +4,12 @@
 
 namespace ST\FigureBundle\Controller;
 
-use ST\FigureBundle\Form\FigureType;
-use ST\FigureBundle\Form\FigureDeleteType;
-use ST\FigureBundle\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use ST\FigureBundle\Form\FigureType;
+use ST\FigureBundle\Form\FigureDeleteType;
+use ST\FigureBundle\Form\CommentType;
 use ST\FigureBundle\Entity\Figure;
 use ST\FigureBundle\Entity\TypeFigure;
 use ST\FigureBundle\Entity\Comment;
