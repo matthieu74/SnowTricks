@@ -6,11 +6,13 @@ namespace ST\FigureBundle\Controller;
 
 use ST\FigureBundle\Form\FigureType;
 use ST\FigureBundle\Form\FigureDeleteType;
+use ST\FigureBundle\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use ST\FigureBundle\Entity\Figure;
 use ST\FigureBundle\Entity\TypeFigure;
+use ST\FigureBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class FigureController extends Controller
@@ -110,20 +112,32 @@ class FigureController extends Controller
 		  	throw new NotFoundHttpException("La figure d'id ".$id." n'existe pas.");
 		}
 		
+		$listComment = $this->get('figure_service')->getComments($figure, $offset);
+		
 		$listTypeFigure = $this->get('figure_service')->getTypesFigures($figure);
+			
+		$comment = new Comment();
+		$form = $this->get('form.factory')->create(CommentType::class, $comment);
 		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
 			$user = $this->container->get('security.token_storage')->getToken()->getUser();
+			$this->get('figure_service')->saveComment($user,$figure, $comment);
 			return $this->redirectToRoute('st_figure_view_by_10', array(
         												'name' => $name,
 														'offset' => $offset));
 		}
 		
+		
+		
+		$paging = $this->get('layout_service')->getPaging($listComment,10, $offset);
     	$array = array(
 						'title' => 'snow tricks',
 						'figure' => $figure,
-						'types_figure' => $listTypeFigure
+						'comments' => $listComment,
+						'types_figure' => $listTypeFigure,
+						'form' => $form->createView(),
+						'paging' => $paging
 						);
 		
 		//return var_dump($listTypeFigure);

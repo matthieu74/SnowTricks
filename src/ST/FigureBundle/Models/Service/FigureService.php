@@ -167,6 +167,13 @@ class FigureService
 		$this->em->flush();
 	}
 	
+	public function getComments($figure, $offset)
+	{
+		$startOffset = $offset * 10;
+		return $this->em->getRepository('STFigureBundle:Comment')
+		 			->findBy(array('figure' => $figure), array('updateDate' => 'DESC'), 10, $startOffset);
+		
+	}
 	
 	public function getTypesFigures($figure)
 	{
@@ -178,8 +185,20 @@ class FigureService
 		return $stmt->fetchAll();
 	}
 	
-
+	public function saveComment($user,$figure,  $comment)
+	{
+		$comment->setUser($user);
+		$comment->setFigure($figure);
+		$comment->setUpdateDate(new \DateTime());
+		$this->em->persist($comment);
+		$this->em->flush();
+	}
 	
+	public function addComment($comment)
+	{
+		$this->em->persist($comment);
+		$this->em->flush();
+	}
 	
 	public function getAllTypeFigure()
 	{
@@ -187,4 +206,19 @@ class FigureService
 	}
 	
 	
+	public function deleteAllData()
+	{
+		$sql = 'DELETE FROM STFigureBundle:Comment';
+		$stmt = $this->em->createQuery($sql);
+		$stmt->execute();
+		
+		
+		$sql = 'DELETE FROM STFigureBundle:Figure';
+		$stmt = $this->em->createQuery($sql);
+		$stmt->execute();
+		
+		$sql = 'DELETE FROM STFigureBundle:Typefigure';
+		$stmt = $this->em->createQuery($sql);
+		$stmt->execute();
+	}
 }
