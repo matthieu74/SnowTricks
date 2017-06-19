@@ -9,9 +9,9 @@
         		{{ figure.name }}
         		<span class = 'pull-right pull-right-margin'><a href = "{{ path('st_admin_histo', {'id': figure.id}) }}">historique</a></span>
         		{% if figure.active == 0 %}
-        			<span class = 'pull-right pull-right-margin'><a href = "{{ path('st_admin_activate', {'id': figure.id, 'actValue' : 1}) }}">désactiver</a></span></li>
+        			<span class = 'pull-right pull-right-margin'><a href = "{{ path('st_admin_activate', {'id': figure.id, 'actValue' : 1}) }}">deactivate</a></span></li>
         		{% else %}
-					<span class = 'pull-right pull-right-margin'><a href = "{{ path('st_admin_activate', {'id': figure.id, 'actValue' : 0}) }}">ré-activer</a></span></li>
+					<span class = 'pull-right pull-right-margin'><a href = "{{ path('st_admin_activate', {'id': figure.id, 'actValue' : 0}) }}">reactivate</a></span></li>
 				{% endif %}        
          {% endfor %}
         
