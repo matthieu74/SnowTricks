@@ -1,3 +1,7 @@
+st_admin:
+    resource: "@STAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
 st_auth:
     resource: "@STUserBundle/Resources/config/routing.yml"
     prefix:   /login
