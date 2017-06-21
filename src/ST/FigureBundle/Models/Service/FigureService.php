@@ -4,6 +4,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use ST\FigureBundle\Entity\TypeFigure;
 use Symfony\Component\DomCrawler\Crawler;
+use ST\FigureBundle\Entity\FigureHisto;
 
 
 class FigureService
@@ -28,6 +29,21 @@ class FigureService
             ->setFirstResult($firstRow);
 
 		return $query->getQuery()->getResult();
+	}
+	
+	public function getFigure($slug)
+	{
+		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('slug' => $slug));
+	}
+	
+	public function getFigurebyName($name)
+	{
+		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('name' => $name));
+	}
+	
+	public function getFigureById($id)
+	{
+		return $this->em ->getRepository('STFigureBundle:Figure')->find($id);
 	}
 	
 	public function addFigure($user, $figure, $listTypeFigure)
@@ -87,21 +103,6 @@ class FigureService
 		return null;
 	}
 	
-	public function getFigure($slug)
-	{
-		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('slug' => $slug));
-	}
-	
-	public function getFigurebyName($name)
-	{
-		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('name' => $name));
-	}
-	
-	public function getFigureById($id)
-	{
-		return $this->em ->getRepository('STFigureBundle:Figure')->find($id);
-	}
-	
 	public function saveFigure($figure, $listTypeFigure)
 	{
 		foreach($figure->getTypeFigure() as $typeF)
@@ -129,12 +130,8 @@ class FigureService
 			}
 			
         }
-        
         $this->getImage($figure);
-		$figure->setUpdateDate(new \DateTime());
 		$this->em ->persist($figure);
-		
-		
 		$this->em ->flush();
 	}
 	
@@ -221,4 +218,5 @@ class FigureService
 		$stmt = $this->em->createQuery($sql);
 		$stmt->execute();
 	}
+	
 }

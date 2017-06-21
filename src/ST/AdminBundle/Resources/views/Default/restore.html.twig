@@ -1,0 +1,29 @@
+{% extends "STAdminBundle::layout.html.twig" %}
+
+{% block admin %}
+<section id="myFigure">
+        <div class="container">
+			<div class="col-lg-10 col-lg-offset-1">
+				<div class="row">
+					<h2>{{ figure.name }}</h2>
+					Posted by <i>{{ figure.user.username }}</i> on {{ figure.updateDate|date("d/m/y") }}
+					<p> {{ figure.description|raw }}</p>
+					
+				</div>
+            
+				{% if is_granted("ROLE_ADMIN") %}
+				
+				{{ form_start(form) }}					
+				<div class="row">
+					<hr>
+					<div class="text-right">
+						<button type="submit" class="btnsave btn btn-default">Restore</button>
+					</div>
+				</div>
+				{{ form_end(form) }}
+				{% endif %}
+        </div>
+    </section>
+  
+
+{% endblock %}
