@@ -11,3 +11,4 @@ namespace ST\FigureBundle\Repository;
 class FigureHistoRepository extends \Doctrine\ORM\EntityRepository
 {
 }
+

@@ -12,6 +12,7 @@
         			<span class = 'pull-right pull-right-margin'><a href = "{{ path('st_admin_activate', {'id': figure.id, 'actValue' : 1}) }}">deactivate</a></span></li>
         		{% else %}
 					<span class = 'pull-right pull-right-margin'><a href = "{{ path('st_admin_activate', {'id': figure.id, 'actValue' : 0}) }}">reactivate</a></span></li>
+
 				{% endif %}        
          {% endfor %}
         
