@@ -5,11 +5,14 @@ namespace ST\FigureBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use ST\FigureBundle\Entity\FigureHisto;
+
 /**
  * Figure
  *
  * @ORM\Table(name="figure")
  * @ORM\Entity(repositoryClass="ST\FigureBundle\Repository\FigureRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Figure
 {
@@ -17,6 +20,7 @@ class Figure
 	public function __construct()
     {
         $this->typeFigure = new ArrayCollection();
+        $this->figureHisto = null;
     }
     /**
      * @var int
@@ -128,7 +132,7 @@ class Figure
     {
         return $this->id;
     }
-
+    
     /**
      * Set name
      *
@@ -205,6 +209,26 @@ class Figure
 	public function getSlug()
 	{
 		return $this->slug;
-	}
+	}	
+    
+    private function setId($id)
+    {
+        $this->id = $id;
+    }
+    
+    private function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+    
+    public function setFromFigureHisto($figureHisto)
+    {
+        $this->setId($figureHisto->getIdFigure());
+        $this->setName($figureHisto->getName());
+        $this->setSlug($figureHisto->getSlug());
+        $this->setDescription($figureHisto->getDescription());
+        $this->setUpdateDate($figureHisto->getUpdateDate());
+        $this->setImage($figureHisto->getImage());   
+        $this->setUser($figureHisto->getUser());
+    }
 }
-

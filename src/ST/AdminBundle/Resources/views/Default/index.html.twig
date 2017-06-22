@@ -1,1 +1,20 @@
-Hello World!
+{% extends "STAdminBundle::layout.html.twig" %}
+
+{% block admin %}
+    <div class="container">
+      <h2>Listes des différentes pages :</h2>
+      <ul class="list-group">
+      	{% for figure in figures %}
+        	<li class="list-group-item">
+        		{{ figure.name }}
+        		<span class = 'pull-right pull-right-margin'><a href = "{{ path('st_admin_histo', {'id': figure.id}) }}">historique</a></span>
+        		{% if figure.active == 0 %}
+        			<span class = 'pull-right pull-right-margin'><a href = "{{ path('st_admin_activate', {'id': figure.id, 'actValue' : 1}) }}">deactivate</a></span></li>
+        		{% else %}
+					<span class = 'pull-right pull-right-margin'><a href = "{{ path('st_admin_activate', {'id': figure.id, 'actValue' : 0}) }}">reactivate</a></span></li>
+				{% endif %}        
+         {% endfor %}
+        
+      </ul>
+    </div>
+{% endblock %}
