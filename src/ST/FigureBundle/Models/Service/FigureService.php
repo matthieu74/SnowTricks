@@ -17,28 +17,27 @@ class FigureService
 	
 	public function getFigures($offset)
 	{
-		$firstRow = intval($offset) * 9;
-		
-		$query = $this->em->createQueryBuilder();
-		$query->select('f.id,f.name,f.slug, f.updateDate,u.username, f.image')
+		return $this->em->createQueryBuilder()
+		    ->select('f.id,f.name,f.slug, f.updateDate,u.username, f.image')
 			->from('ST\FigureBundle\Entity\Figure', 'f')
 			->leftjoin('f.user', 'u')
 			->where('f.active = 0')
 			->addOrderBy('f.updateDate', 'DESC')
 			 ->setMaxResults(9)
-            ->setFirstResult($firstRow);
-
-		return $query->getQuery()->getResult();
+            ->setFirstResult(intval($offset) * 9)
+            ->getQuery()->getResult();
 	}
 	
 	public function getFigure($slug)
 	{
-		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('slug' => $slug));
+		return $this->em ->getRepository('STFigureBundle:Figure')
+            ->findOneBy(array('slug' => $slug));
 	}
 	
 	public function getFigurebyName($name)
 	{
-		return $this->em ->getRepository('STFigureBundle:Figure')->findOneBy(array('name' => $name));
+		return $this->em ->getRepository('STFigureBundle:Figure')
+            ->findOneBy(array('name' => $name));
 	}
 	
 	public function getFigureById($id)

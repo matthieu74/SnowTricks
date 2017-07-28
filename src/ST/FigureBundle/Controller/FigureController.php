@@ -22,13 +22,11 @@ class FigureController extends Controller
     {
 		$results = $this->get('figure_service')->getFigures($offset);
 
-		$paging = $this->get('layout_service')->getPaging($results,9, $offset);
-		$array = array(
-						'title' => 'snow tricks',
-						'figures' => $results,
-                        'paging' => $paging
-						);
-		return $this->render('STFigureBundle:Core:index.html.twig', $array);
+		return $this->render('STFigureBundle:Core:index.html.twig', array(
+            'title' => 'snow tricks',
+            'figures' => $results,
+            'paging' => $this->get('layout_service')->getPaging($results,9, $offset)
+        ));
     }
 	
 	public function indexAction()
@@ -42,16 +40,15 @@ class FigureController extends Controller
     public function addFigureAction(Request $request)
 	{
 		$figure = new Figure();
-		
 		$form = $this->get('form.factory')->create(FigureType::class, $figure);
-		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
-			$typeFigureArray = [];
-			if (array_key_exists('typeFigure',$_POST['figure']))
-			{
-				$typeFigureArray = $_POST['figure']['typeFigure'];
-			}
+            $postData = $request->request->get('figure');
+            $typeFigureArray = [];
+            if (array_key_exists('typeFigure',$postData))
+            {
+                $typeFigureArray = $postData['typeFigure'];
+            }
 			$results = $this->get('figure_service')->addFigure($this->container->get('security.token_storage')->getToken()->getUser(),
 									  $figure, $typeFigureArray);
 			if (!is_null($results))
@@ -70,9 +67,10 @@ class FigureController extends Controller
 			);
 			return $this->redirectToRoute('st_home');
 		}
-		$categories = $this->get('figure_service')->getAllTypeFigure();
+
 		return $this->render('STFigureBundle:Core:edit.html.twig', array(
-      							'form' => $form->createView(), 'categories' => $categories,
+      							'form' => $form->createView(),
+                                'categories' => $this->get('figure_service')->getAllTypeFigure(),
     						));
 	}
 	
@@ -81,15 +79,16 @@ class FigureController extends Controller
      */
 	public function editFigureAction($id, Request $request)
 	{
+
     	$figure = $this->get('figure_service')->getFigureById($id);
 		$form = $this->get('form.factory')->create(FigureType::class, $figure);
-		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
+            $postData = $request->request->get('figure');
 			$typeFigureArray = [];
-			if (array_key_exists('typeFigure',$_POST['figure']))
+			if (array_key_exists('typeFigure',$postData))
 			{
-				$typeFigureArray = $_POST['figure']['typeFigure'];
+				$typeFigureArray = $postData['typeFigure'];
 			}
 			$this->get('figure_service')->saveFigure($figure, $typeFigureArray);
 			$this->get('session')->getFlashBag()->add(
@@ -98,9 +97,10 @@ class FigureController extends Controller
 			);
 			return $this->redirectToRoute('st_home');
 		}
-		$categories = $this->get('figure_service')->getAllTypeFigure();
+
 		return $this->render('STFigureBundle:Core:edit.html.twig', array(
-      							'form' => $form->createView(), 'categories' => $categories,
+      							'form' => $form->createView(),
+                                'categories' => $this->get('figure_service')->getAllTypeFigure(),
     		));
 	}
 	
@@ -109,16 +109,14 @@ class FigureController extends Controller
 	{
     	$figure = $this->get('figure_service')->getFigure($name);
 		if (null === $figure) {
-		  	throw new NotFoundHttpException("La figure d'id ".$id." n'existe pas.");
+		  	throw new NotFoundHttpException("La figure de nom ".$name." n'existe pas.");
 		}
 		
-		$listComment = $this->get('figure_service')->getComments($figure, $offset);
-		
-		$listTypeFigure = $this->get('figure_service')->getTypesFigures($figure);
+
+
 			
 		$comment = new Comment();
 		$form = $this->get('form.factory')->create(CommentType::class, $comment);
-		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
 			$user = $this->container->get('security.token_storage')->getToken()->getUser();
@@ -127,21 +125,17 @@ class FigureController extends Controller
         												'name' => $name,
 														'offset' => $offset));
 		}
-		
-		
-		
-		$paging = $this->get('layout_service')->getPaging($listComment,10, $offset);
-    	$array = array(
-						'title' => 'snow tricks',
-						'figure' => $figure,
-						'comments' => $listComment,
-						'types_figure' => $listTypeFigure,
-						'form' => $form->createView(),
-						'paging' => $paging
-						);
-		
-		//return var_dump($listTypeFigure);
-		return $this->render('STFigureBundle:Core:detail.html.twig', $array);
+
+        $listComment = $this->get('figure_service')->getComments($figure, $offset);
+		return $this->render('STFigureBundle:Core:detail.html.twig',
+            array(
+                'title' => 'snow tricks',
+                'figure' => $figure,
+                'comments' => $listComment,
+                'types_figure' => $this->get('figure_service')->getTypesFigures($figure),
+                'form' => $form->createView(),
+                'paging' => $this->get('layout_service')->getPaging($listComment,10, $offset)
+            ));
 	}
 		
 	public function viewFigureAction($name, Request $request)

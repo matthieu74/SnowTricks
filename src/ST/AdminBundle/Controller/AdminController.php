@@ -12,34 +12,31 @@ class AdminController extends Controller
 {
     public function indexAction()
     {
-    	
-    	$figures = $this->get('admin_service')->getFigures();
-    	$array = array(
-    			'figures' => $figures
-    	);
-    	return $this->render('STAdminBundle:Default:index.html.twig', $array);
+    	return $this->render('STAdminBundle:Default:index.html.twig',
+            array(
+                'figures' => $this->get('admin_service')->getFigures()
+            ));
     }
     
     public function activateAction($id, $actValue)
     {
-    	$figures = $this->get('admin_service')->setActive($id, $actValue);
+    	$this->get('admin_service')->setActive($id, $actValue);
     	return $this->redirectToRoute('st_admin_homepage');
     	
     }
     
     public function histoAction($id)
     {
-        $histo = $this->get('admin_service')->getHisto($id);
-        $array = array(
-    			'histo' => $histo
-    	);
-    	return $this->render('STAdminBundle:Default:histo.html.twig', $array);
+    	return $this->render('STAdminBundle:Default:histo.html.twig',
+            array(
+                'histo' => $this->get('admin_service')->getHisto($id)));
     }
     
     public function viewAction($id,$version, Request $request)
     {
         $figureHisto = $this->get('admin_service')->getVersion($version);
-		$form = $this->get('form.factory')->create(FigureHistoRestoreType::class, $figureHisto);
+		$form = $this->get('form.factory')
+            ->create(FigureHistoRestoreType::class, $figureHisto);
 		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{

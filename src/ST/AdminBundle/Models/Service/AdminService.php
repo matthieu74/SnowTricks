@@ -13,13 +13,11 @@ class AdminService
 	
 	public function getFigures()
 	{
-		$query = $this->em->createQueryBuilder();
-		$query->select('f.id,f.name,f.slug,f.active, f.updateDate,u.username')
-		->from('ST\FigureBundle\Entity\Figure', 'f')
-		->leftjoin('f.user', 'u')
-		->addOrderBy('f.updateDate', 'DESC');
-		
-		return $query->getQuery()->getResult();
+		return $this->em->createQueryBuilder()
+		    ->select('f.id,f.name,f.slug,f.active, f.updateDate,u.username')
+            ->from('ST\FigureBundle\Entity\Figure', 'f')
+            ->leftjoin('f.user', 'u')
+            ->addOrderBy('f.updateDate', 'DESC')->getQuery()->getResult();
 	}
 	
 	public function setActive($idFigure, $actValue)
